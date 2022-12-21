@@ -5,10 +5,10 @@
 <mapper namespace="com.travelrec.project.mapper.UserMapper">
 	
 	<insert id="insert" parameterType="UserDto">
-	INSERT INTO USER
-	(userId,password,email,username)
-	VALUES
-	(#{userId} , #{password} , #{email} , #{username})
+			INSERT INTO USER
+			(userId,password,email,username)
+			VALUES
+			(#{userId} , #{password} , #{email} , #{username})
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDto">
@@ -22,5 +22,45 @@
 			WHERE userId=#{userId}
 	</update>
 	
+	<update id="chagePw"  parameterType="UserDto">
+			UPDATE USER SET
+			password=#{password}
+			WHERE userId=#{userId}
+	</update>
+	
+	<update id="updateUser" parameterType="UserDto">
+			UPDATE USER SET
+			(email,username)
+			VALUES
+			(#{email} , #{username})
+			WHERE userId=#{userId}
+	</update>
+	
+	<delete id="deleteId" parameterType="String">
+			DELETE FROM USER
+			WHERE userId=#{userId}
+	</delete>
+	
+	<insert id="insertLikePlace"  parameterType="LikePlaceDto">
+			INSERT INTO USER_LIKE
+			(userId,place)
+			VALUES
+			(#{userId} , #{place})
+	</insert>
+	
+	<delete id="deleteLikePlace"  parameterType="LikePlaceDto">
+			DELETE FROM USER_LIKE
+			WHERE userId=#{userId} AND place=#{place}
+	</delete>
+	
+	<select id="selectLikePlace"  resultType="LikePlaceDto">
+			SELECT * FROM USER_LIKE 
+			WHERE userId=#{userId}
+	</select>
+	
+	<select id="selectOneLikePlace"  resultType="LikePlaceDto">
+			SELECT * FROM USER_LIKE 
+			WHERE userId=#{userId} AND place=#{place}
+	</select>
 
 </mapper>

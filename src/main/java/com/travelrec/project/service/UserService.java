@@ -1,5 +1,8 @@
 package com.travelrec.project.service;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -8,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.travelrec.project.config.auth.PrincipalDetail;
+import com.travelrec.project.dto.LikePlaceDto;
 import com.travelrec.project.dto.MailDto;
 import com.travelrec.project.dto.UserDto;
 import com.travelrec.project.mapper.UserMapper;
@@ -25,16 +29,16 @@ public class UserService {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
     private JavaMailSender mailSender;
-    
+ 
     private static final String FROM_ADDRESS = "b2b2007@naver.com";
 
+    
 	public String 회원가입(UserDto user) {
 		int insert = 0;
 		String rawPassword = user.getPassword();
 		String encryptionPassword = bcryptPasswordEncoder.encode(rawPassword);
 		user.setPassword(encryptionPassword);
 		insert = userMapper.insert(user);
-		
 		if(insert > 0) {
 			return "회원가입 성공";
 		}else {
@@ -47,6 +51,90 @@ public class UserService {
 		UserDto user = userMapper.findByUserId(id);
 		return  user;
 	}
+	
+	public String 회원탈퇴(PrincipalDetail principalDetail) {
+		int delete = 0;
+		String id = principalDetail.getUser().getUserId();
+		delete = userMapper.deleteId(id);
+		
+		if(delete > 0 ) {
+			return "회원 탈퇴 성공";
+		}else {
+		return "회원 탈퇴 실패";
+		}
+	}
+	
+	public String 회원정보수정(UserDto user){
+		int update = 0;
+		update = userMapper.updateUser(user);
+		if(update > 0)
+		{
+			return "회원정보 수정 성공";
+		}else {
+			return "회원정보 수정 실패";
+		}
+	}
+	
+	public int 비밀번호수정(PrincipalDetail principalDetail,  String password){
+		int update = 0;
+		UserDto user = principalDetail.getUser();
+		String passwordck = user.getPassword();
+		
+		if(!bcryptPasswordEncoder.matches(passwordck, password))
+		{
+			return 3; // 비밀번호가 일치하지 않음
+		}
+		
+		String encryptionPassword = bcryptPasswordEncoder.encode(password);
+		user.setPassword(encryptionPassword);
+		
+		update = userMapper.chagePw(user);
+		if(update > 0)
+		{
+			return 1; // 비밀번호 수정 설공
+		}else {
+			return 2; // 비밀번호 수정 실패
+		}
+	}
+	
+	 public String 좋아하는장소찜및삭제(PrincipalDetail principalDetail,  String place){
+		 int insert = 0;
+		 int delete = 0;
+		 LikePlaceDto ck = new LikePlaceDto();
+		 LikePlaceDto likePlaceDto = new LikePlaceDto();
+		 String userId = principalDetail.getUser().getUserId();
+		 
+		 likePlaceDto.setUserId(userId);
+		 likePlaceDto.setPlace(place);
+		 
+		 ck = userMapper.selectOneLikePlace(likePlaceDto);
+		 System.out.println(ck);
+		 if(ck == null) // 좋아요 한게 없을시
+		 {
+			 insert = userMapper.insertLikePlace(likePlaceDto);
+			 if(insert > 0)
+			 {
+				 return "관심 목록 등록 완료";
+			 }else {
+				 return "관심 목록 등록 실패";
+			 }
+		 }else {
+			 delete = userMapper.deleteLikePlace(likePlaceDto);
+			 if(insert > 0)
+			 {
+				 return "관심 목록 삭제 완료";
+			 }else {
+				 return "관심 목록 삭제 실패";
+			 }
+		 }
+	 }
+	 
+	 public List<?> 좋아하는장소가져오기(PrincipalDetail principalDetail){
+		 String userId = principalDetail.getUser().getUserId();
+		 List<LikePlaceDto> likePlace = userMapper.selectLikePlace(userId);
+		 return likePlace;
+	 }
+	
 	
     public MailDto createMail(String userId , String email, String tempPassword) {
         MailDto dto = new MailDto();
