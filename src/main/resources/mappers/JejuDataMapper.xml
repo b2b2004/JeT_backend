@@ -7,4 +7,9 @@
 	<select id="findByAreaTravel"  resultType="JejuDataDto" parameterType="int">
 			SELECT * FROM JEJUDATA WHERE JejuDataNo BETWEEN 1 AND #{pageNo}
 	</select>
+	
+	
+		<select id="findByJejuDataNo"  resultType="JejuDataDto" parameterType="int">
+			SELECT * FROM JEJUDATA WHERE JejuDataNo=#{num}
+	</select>
 </mapper>

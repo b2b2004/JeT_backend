@@ -24,5 +24,10 @@ public class TravelService {
 		return JDD;
 	}
 	
+	public JejuDataDto 관광지(int num) {
+		JejuDataDto Jeju = jejuDataMapper.findByJejuDataNo(num);
+		return Jeju;
+	}
+	
 	
 }

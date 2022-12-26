@@ -11,5 +11,6 @@ import com.travelrec.project.dto.JejuDataDto;
 public interface JejuDataMapper {
 
 	List<JejuDataDto> findByAreaTravel(int pageNo);
+	JejuDataDto findByJejuDataNo(int num);
 	
 }
