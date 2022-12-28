@@ -15,6 +15,8 @@ public class JejuDataDto {
 	private int like_num;
 	private int review_num;
 	private String lookup_num;	
+	private int real_lookup_num;
+	private int real_like_num;
 	private int share_num;
 	private String moreinfo;	
 	private String detail_img;	

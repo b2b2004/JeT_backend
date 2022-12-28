@@ -11,9 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.travelrec.project.config.auth.PrincipalDetail;
+import com.travelrec.project.dto.JejuDataDto;
 import com.travelrec.project.dto.LikePlaceDto;
 import com.travelrec.project.dto.MailDto;
 import com.travelrec.project.dto.UserDto;
+import com.travelrec.project.mapper.JejuDataMapper;
 import com.travelrec.project.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +26,9 @@ public class UserService {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private JejuDataMapper jejuDataMapper;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -100,28 +105,40 @@ public class UserService {
 	 public String 좋아하는장소찜및삭제(PrincipalDetail principalDetail,  String place){
 		 int insert = 0;
 		 int delete = 0;
+		 int update = 0;
+		 int like_num= 0;
+		 
 		 LikePlaceDto ck = new LikePlaceDto();
 		 LikePlaceDto likePlaceDto = new LikePlaceDto();
+		 JejuDataDto Jeju = null;
 		 String userId = principalDetail.getUser().getUserId();
 		 
+		 Jeju = jejuDataMapper.findbyname(place);
+		 like_num = Jeju.getReal_like_num();
 		 likePlaceDto.setUserId(userId);
 		 likePlaceDto.setPlace(place);
+		 Jeju.setName(place);
 		 
 		 ck = userMapper.selectOneLikePlace(likePlaceDto);
-		 System.out.println(ck);
 		 if(ck == null) // 좋아요 한게 없을시
 		 {
 			 insert = userMapper.insertLikePlace(likePlaceDto);
 			 if(insert > 0)
 			 {
+				 like_num++;
+				 Jeju.setReal_like_num(like_num);
+				 update = jejuDataMapper.setLike(Jeju);
 				 return "관심 목록 등록 완료";
 			 }else {
 				 return "관심 목록 등록 실패";
 			 }
 		 }else {
 			 delete = userMapper.deleteLikePlace(likePlaceDto);
-			 if(insert > 0)
+			 if(delete > 0)
 			 {
+				 like_num--;
+				 Jeju.setReal_like_num(like_num);
+				 jejuDataMapper.setLike(Jeju);
 				 return "관심 목록 삭제 완료";
 			 }else {
 				 return "관심 목록 삭제 실패";

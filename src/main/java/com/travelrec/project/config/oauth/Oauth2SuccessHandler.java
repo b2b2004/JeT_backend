@@ -29,7 +29,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //HMAC Hash암호 방식
         String jwtToken = JWT.create()
                 .withSubject(username)
-                .withExpiresAt(new Date(System.currentTimeMillis()+(60000*10))) //만료시간 10분
+                .withExpiresAt(new Date(System.currentTimeMillis()+(600000*10))) //만료시간 10분 60000*10
                 .withClaim("username",username)
                 .withClaim("password", password)
                 .sign(Algorithm.HMAC512("Jet"));

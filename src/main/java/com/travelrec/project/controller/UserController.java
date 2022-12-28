@@ -77,4 +77,5 @@ public class UserController {
 		PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
 		return new ResponseEntity<>(userService.좋아하는장소가져오기(principal), HttpStatus.OK);
 	}
+	
 }

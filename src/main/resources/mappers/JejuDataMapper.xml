@@ -8,8 +8,70 @@
 			SELECT * FROM JEJUDATA WHERE JejuDataNo BETWEEN 1 AND #{pageNo}
 	</select>
 	
-	
-		<select id="findByJejuDataNo"  resultType="JejuDataDto" parameterType="int">
-			SELECT * FROM JEJUDATA WHERE JejuDataNo=#{num}
+	<select id="findByJejuDataNo"  resultType="JejuDataDto" parameterType="int">
+		SELECT * FROM JEJUDATA WHERE JejuDataNo=#{num}
 	</select>
+	
+	<select id="findbyname"  resultType="JejuDataDto"  parameterType="String">
+		SELECT * FROM JEJUDATA WHERE name=#{name}
+	</select>
+	
+	<insert id="setReviewData" parameterType="PlaceReviewDto">
+			INSERT INTO JEJUDATA_REVIEW
+			(userId,username,place_num,content,nowDate)
+			VALUES
+			(#{userId} ,#{username} ,#{place_num},#{content},#{nowDate})
+	</insert>
+	
+	<select id="findByJeJuPlaceReview"  resultType="PlaceReviewDto" parameterType="int">
+		SELECT * FROM JEJUDATA_REVIEW WHERE place_num=#{num}
+	</select>
+	
+	<update id="setLookup"  parameterType="JejuDataDto">
+			UPDATE JEJUDATA SET
+			real_lookup_num=#{real_lookup_num}
+			WHERE JejuDataNo=#{JejuDataNo}
+	</update>
+	
+	<update id="setLike"  parameterType="JejuDataDto">
+			UPDATE JEJUDATA SET
+			real_like_num=#{real_like_num}
+			WHERE name=#{name}
+	</update>
+	
+	
+	
+	<insert id="insertReviewLike"  parameterType="PlaceReviewLikeDto">
+			INSERT INTO JEJU_REVIEW_LIKE
+			(userId,reviewNo)
+			VALUES
+			(#{userId} , #{reviewNo})
+	</insert>
+	
+	<delete id="deleteReviewLike"  parameterType="PlaceReviewLikeDto">
+			DELETE FROM JEJU_REVIEW_LIKE
+			WHERE userId=#{userId} AND reviewNo=#{reviewNo}
+	</delete>
+	
+	<update id="setReviewLikenum"  parameterType="PlaceReviewDto">
+			UPDATE JEJUDATA_REVIEW SET
+			review_like_num=#{review_like_num}
+			WHERE review_num=#{review_num}
+	</update>
+	
+	<select id="selectOneLikePlaceReview"  resultType="PlaceReviewLikeDto">
+			SELECT * FROM JEJU_REVIEW_LIKE 
+			WHERE userId=#{userId} AND reviewNo=#{reviewNo}
+	</select>
+	
+	<select id="findByReviewNum"  resultType="PlaceReviewDto"  parameterType="int">
+		SELECT * FROM JEJUDATA_REVIEW WHERE review_num=#{review_num}
+	</select>
+	
+	<select id="selectPlaceReviewLike"  resultType="PlaceReviewLikeDto">
+			SELECT * FROM JEJU_REVIEW_LIKE 
+			WHERE userId=#{userId}
+	</select>
+	
+
 </mapper>
