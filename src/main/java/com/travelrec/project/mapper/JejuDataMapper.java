@@ -13,6 +13,7 @@ import com.travelrec.project.dto.PlaceReviewLikeDto;
 public interface JejuDataMapper {
 
 	List<JejuDataDto> findByAreaTravel(int pageNo);
+	List<JejuDataDto> findByissue(int pageNo);
 	JejuDataDto findByJejuDataNo(int num);
 	JejuDataDto findbyname(String name);
 	int setReviewData(PlaceReviewDto review);

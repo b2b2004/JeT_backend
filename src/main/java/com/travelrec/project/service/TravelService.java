@@ -32,6 +32,13 @@ public class TravelService {
 		return JDD;
 	}
 	
+	public List<JejuDataDto> 이슈관광지(int pageNo) {
+		List<JejuDataDto> JDD=null;
+		JDD = jejuDataMapper.findByissue(pageNo);
+		System.out.println(JDD);
+		return JDD;
+	}
+	
 	public JejuDataDto 관광지(int num) {
 		int update =0;
 		JejuDataDto Jeju = jejuDataMapper.findByJejuDataNo(num);
@@ -40,6 +47,11 @@ public class TravelService {
 		lookup++;
 		Jeju.setReal_lookup_num(lookup);
 		update = jejuDataMapper.setLookup(Jeju);
+		return Jeju;
+	}
+	
+	public JejuDataDto 코스관광지(String name) {
+		JejuDataDto Jeju = jejuDataMapper.findbyname(name);
 		return Jeju;
 	}
 	
@@ -103,7 +115,7 @@ public class TravelService {
 			 }else {
 				 return "리뷰 좋아요 등록 실패";
 			 }
-		 
+			 
 		 }else {
 			 delete = jejuDataMapper.deleteReviewLike(PRL);
 			 if(delete > 0)

@@ -39,6 +39,11 @@ public class UserController {
 		return new ResponseEntity<>(userService.유저확인(principal), HttpStatus.OK);
 	}
 	
+	@PostMapping("/user/ckId")
+	public ResponseEntity<?> ckId(@RequestBody String userId){
+		return new ResponseEntity<>(userService.아이디중복확인(userId), HttpStatus.OK);
+	}
+	
 	@PostMapping("/user/findpw")
 	public ResponseEntity<?> findPw(@RequestBody UserDto user){
 		System.out.println("임시비밀번호 발송= "+user);
@@ -52,8 +57,20 @@ public class UserController {
 		return new ResponseEntity<>(userService.회원탈퇴(principal), HttpStatus.OK);
 	}
 	
+	@PostMapping("/user/ckPw")
+	public ResponseEntity<?> ckPassword(Authentication authentication, @RequestBody String password){
+		PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+		System.out.println("ckPassword 실행 :" + password);
+		return new ResponseEntity<>(userService.비밀번호확인(principal , password), HttpStatus.OK);
+	}
+	
 	@PostMapping("/user/chageUser")
-	public ResponseEntity<?> chageUser(@RequestBody UserDto user){
+	public ResponseEntity<?> chageUser(Authentication authentication, @RequestBody String email){
+		UserDto user = new UserDto();
+		PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+		user.setUserId(principal.getUsername());
+		user.setEmail(email);
+		System.out.println("hi"+ user);
 		System.out.println("chageUser 실행 ");
 		return new ResponseEntity<>(userService.회원정보수정(user), HttpStatus.OK);
 	}

@@ -30,9 +30,7 @@
 	
 	<update id="updateUser" parameterType="UserDto">
 			UPDATE USER SET
-			(email,username)
-			VALUES
-			(#{email} , #{username})
+			email=#{email}
 			WHERE userId=#{userId}
 	</update>
 	

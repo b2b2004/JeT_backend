@@ -5,7 +5,11 @@
 <mapper namespace="com.travelrec.project.mapper.JejuDataMapper">
 
 	<select id="findByAreaTravel"  resultType="JejuDataDto" parameterType="int">
-			SELECT * FROM JEJUDATA WHERE JejuDataNo BETWEEN 1 AND #{pageNo}
+			SELECT * FROM JEJUDATA ORDER BY like_num DESC limit #{pageNo}
+	</select>
+	
+	<select id="findByissue"  resultType="JejuDataDto" parameterType="int">
+			SELECT * FROM JEJUDATA ORDER BY like_num/review_num DESC limit #{pageNo};
 	</select>
 	
 	<select id="findByJejuDataNo"  resultType="JejuDataDto" parameterType="int">

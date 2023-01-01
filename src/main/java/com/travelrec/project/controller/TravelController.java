@@ -31,10 +31,22 @@ public class TravelController {
 		return new ResponseEntity<>(travelService.유명관광지(pageNo),HttpStatus.OK);
 	}
 	
+	@PostMapping("/board/issue")
+	public ResponseEntity<?> issue(@RequestBody int pageNo){
+		System.out.println("이슈 관광지 추천 controller");
+		return new ResponseEntity<>(travelService.이슈관광지(pageNo),HttpStatus.OK);
+	}
+	
 	@PostMapping("/board/JejuPlace/information/{num}")
 	public ResponseEntity<?> jejuPlace(@PathVariable int num){
 		System.out.println("관광지 정보 전송 controller");
 		return new ResponseEntity<>(travelService.관광지(num),HttpStatus.OK);
+	}
+	
+	@PostMapping("/board/JejuPlace/name")
+	public ResponseEntity<?> jejuPlaceName(@RequestBody String name){
+		System.out.println("관광지 정보 전송 controller");
+		return new ResponseEntity<>(travelService.코스관광지(name),HttpStatus.OK);
 	}
 	
 	@PostMapping("/board/JejuPlace/review")

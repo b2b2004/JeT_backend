@@ -57,6 +57,21 @@ public class UserService {
 		return  user;
 	}
 	
+	public int 아이디중복확인(String userId)
+	{
+		UserDto user = userMapper.findByUserId(userId);
+		System.out.println(userId);
+		System.out.println(user);
+		if(user == null)
+		{
+			return 1; // 중복 유저 x
+		}else if(user != null){
+			return 2; // 중복 유저 o
+		}else {
+			return 3; // 데이터 베이스 오류
+		}
+	}
+	
 	public String 회원탈퇴(PrincipalDetail principalDetail) {
 		int delete = 0;
 		String id = principalDetail.getUser().getUserId();
@@ -69,26 +84,20 @@ public class UserService {
 		}
 	}
 	
-	public String 회원정보수정(UserDto user){
+	public int 회원정보수정(UserDto user){
 		int update = 0;
 		update = userMapper.updateUser(user);
 		if(update > 0)
 		{
-			return "회원정보 수정 성공";
+			return 1; // 성공
 		}else {
-			return "회원정보 수정 실패";
+			return 2; // 실패
 		}
 	}
 	
 	public int 비밀번호수정(PrincipalDetail principalDetail,  String password){
 		int update = 0;
 		UserDto user = principalDetail.getUser();
-		String passwordck = user.getPassword();
-		
-		if(!bcryptPasswordEncoder.matches(passwordck, password))
-		{
-			return 3; // 비밀번호가 일치하지 않음
-		}
 		
 		String encryptionPassword = bcryptPasswordEncoder.encode(password);
 		user.setPassword(encryptionPassword);
@@ -100,6 +109,20 @@ public class UserService {
 		}else {
 			return 2; // 비밀번호 수정 실패
 		}
+	}
+	
+	public int 비밀번호확인(PrincipalDetail principalDetail,  String password){
+		
+		UserDto user = principalDetail.getUser();
+		String passwordck = user.getPassword();
+		
+		if(!bcryptPasswordEncoder.matches(password, passwordck))
+		{
+			return 3; // 비밀번호가 일치하지 않음
+		}else {
+			return 1;
+		}
+
 	}
 	
 	 public String 좋아하는장소찜및삭제(PrincipalDetail principalDetail,  String place){

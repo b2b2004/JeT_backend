@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.travelrec.project.mapper.CourseMapper">
+
+	<select id="findbycoursenum" resultType="Map" parameterType="int">
+			SELECT 
+			userId, title, content,
+			A.place1, B.Latitude AS Latitude1, B.Longitude AS Longitude1, B.name AS name1 ,
+			A.place2, C.Latitude AS Latitude2, C.Longitude AS Longitude2, C.name AS name2,
+			A.place3, D.Latitude AS Latitude3, D.Longitude AS Longitude3, D.name AS name3,
+			A.place4, E.Latitude AS Latitude4, E.Longitude AS Longitude4, E.name AS name4,
+			A.place5, F.Latitude AS Latitude5, F.Longitude AS Longitude5, F.name AS name5,
+			A.place6, G.Latitude AS Latitude6, G.Longitude AS Longitude6, G.name AS name6,
+			A.place7, H.Latitude AS Latitude7, H.Longitude AS Longitude7, H.name AS name7 FROM Course AS A
+			LEFT JOIN JEJUDATA AS B
+			ON A.place1 = B.JejuDataNo
+			LEFT JOIN JEJUDATA AS C
+			ON A.place2 = C.JejuDataNo
+			LEFT JOIN JEJUDATA AS D
+			ON A.place3 = D.JejuDataNo
+			LEFT JOIN JEJUDATA AS E
+			ON A.place4 = E.JejuDataNo
+			LEFT JOIN JEJUDATA AS F
+			ON A.place5 = F.JejuDataNo
+			LEFT JOIN JEJUDATA AS G
+			ON A.place6 = G.JejuDataNo
+			LEFT JOIN JEJUDATA AS H
+			ON A.place7 = H.JejuDataNo
+			where course_num=#{num};
+	</select>
+	
+	<select id="selectcourseList"  resultType="Map">
+			SELECT
+			userId, title, content, course_num, B.detail_img AS imgUrl,
+			B.name AS name1, C.name AS name2, D.name AS name3, E.name AS name4, 
+			F.name AS name5, G.name AS name6, H.name AS name7 FROM Course AS A
+			LEFT JOIN JEJUDATA AS B
+			ON A.place1 = B.JejuDataNo
+			LEFT JOIN JEJUDATA AS C
+			ON A.place2 = C.JejuDataNo
+			LEFT JOIN JEJUDATA AS D
+			ON A.place3 = D.JejuDataNo
+			LEFT JOIN JEJUDATA AS E
+			ON A.place4 = E.JejuDataNo
+			LEFT JOIN JEJUDATA AS F
+			ON A.place5 = F.JejuDataNo
+			LEFT JOIN JEJUDATA AS G
+			ON A.place6 = G.JejuDataNo
+			LEFT JOIN JEJUDATA AS H
+			ON A.place7 = H.JejuDataNo
+			ORDER BY course_num ASC;
+	</select>
+	
+</mapper>
