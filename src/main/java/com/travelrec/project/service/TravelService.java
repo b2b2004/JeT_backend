@@ -111,9 +111,9 @@ public class TravelService {
 				 like_num++;
 				 PR.setReview_like_num(like_num);
 				 jejuDataMapper.setReviewLikenum(PR);
-				 return "리뷰 좋아요 등록 성공";
+				 return "좋아요 등록 성공";
 			 }else {
-				 return "리뷰 좋아요 등록 실패";
+				 return "좋아요 등록 실패";
 			 }
 			 
 		 }else {
@@ -123,9 +123,9 @@ public class TravelService {
 				 like_num--;
 				 PR.setReview_like_num(like_num);
 				 jejuDataMapper.setReviewLikenum(PR);
-				 return "리뷰 좋아요 삭제 성공";
+				 return "좋아요 삭제 성공";
 			 }else {
-				 return "리뷰 좋아요 삭제 성공";
+				 return "좋아요 삭제 실패";
 			 }
 		 }
 	 }
@@ -134,5 +134,16 @@ public class TravelService {
 		 String userId = principalDetail.getUser().getUserId();
 		 List<PlaceReviewLikeDto> PlaceReviewLike = jejuDataMapper.selectPlaceReviewLike(userId);
 		 return PlaceReviewLike;
+	 }
+	 
+	 public int 리뷰삭제하기(int review_num) {
+		 int delete = 0;
+		 System.out.println("hi");
+		 delete = jejuDataMapper.deleteReview(review_num);
+		 if(delete > 0) {
+			 return 1;
+		 }else {
+			 return 2;
+		 }
 	 }
 }

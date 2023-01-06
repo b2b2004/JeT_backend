@@ -2,6 +2,7 @@ package com.travelrec.project.service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,6 +15,7 @@ import com.travelrec.project.config.auth.PrincipalDetail;
 import com.travelrec.project.dto.JejuDataDto;
 import com.travelrec.project.dto.LikePlaceDto;
 import com.travelrec.project.dto.MailDto;
+import com.travelrec.project.dto.SurveyDto;
 import com.travelrec.project.dto.UserDto;
 import com.travelrec.project.mapper.JejuDataMapper;
 import com.travelrec.project.mapper.UserMapper;
@@ -122,7 +124,6 @@ public class UserService {
 		}else {
 			return 1;
 		}
-
 	}
 	
 	 public String 좋아하는장소찜및삭제(PrincipalDetail principalDetail,  String place){
@@ -174,8 +175,53 @@ public class UserService {
 		 List<LikePlaceDto> likePlace = userMapper.selectLikePlace(userId);
 		 return likePlace;
 	 }
+	 
+	 
+	 public List<Map<String, Object>> 마이페이지좋아하는장소(PrincipalDetail principalDetail){
+		 String userId = principalDetail.getUser().getUserId();
+		 List<Map<String, Object>> likePlace = userMapper.selectLikePlaceMypage(userId);
+		 System.out.println(likePlace);
+		 return likePlace;
+	 }
 	
+	public int 사용자성향등록(SurveyDto survey) {
+		int insert = 0;
+		insert = userMapper.insertSurvey(survey);
+		if(insert > 0)
+		{
+			return 1; //성공
+		}
+		else {
+			return 2; // 실패
+		}
+	}
 	
+	public SurveyDto 사용자성향불러오기(String userId) {
+		SurveyDto survey = null;
+		survey = userMapper.getSurvey(userId);
+		if(survey != null)
+		{
+			return survey;
+		}else {
+			return null;
+		}
+	}
+	
+	public int 사용자성향수정(SurveyDto survey) {
+		int update = 0;
+		update = userMapper.updateSurvey(survey);
+		if(update > 0)
+		{
+			return 1; //성공
+		}
+		else {
+			return 2; // 실패
+		}
+	}
+	 
+	 
+	 
+	 
     public MailDto createMail(String userId , String email, String tempPassword) {
         MailDto dto = new MailDto();
         dto.setAddress(email);

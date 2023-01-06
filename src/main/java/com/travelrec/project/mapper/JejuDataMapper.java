@@ -28,4 +28,5 @@ public interface JejuDataMapper {
 	PlaceReviewDto findByReviewNum(int review_num);
 	List<PlaceReviewLikeDto> selectPlaceReviewLike(String userId);
 	
+	int deleteReview(int review_num);
 }

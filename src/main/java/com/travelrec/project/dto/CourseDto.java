@@ -16,4 +16,5 @@ public class CourseDto {
 	private String title;
 	private String content;
 	private int like_num;
+	private int lookup_num;
 }

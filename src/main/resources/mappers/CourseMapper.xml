@@ -7,7 +7,7 @@
 
 	<select id="findbycoursenum" resultType="Map" parameterType="int">
 			SELECT 
-			userId, title, content,
+			userId, title, content, course_num, A.lookup_num AS lookup_num, A.like_num AS like_num,
 			A.place1, B.Latitude AS Latitude1, B.Longitude AS Longitude1, B.name AS name1 ,
 			A.place2, C.Latitude AS Latitude2, C.Longitude AS Longitude2, C.name AS name2,
 			A.place3, D.Latitude AS Latitude3, D.Longitude AS Longitude3, D.name AS name3,
@@ -51,7 +51,97 @@
 			ON A.place6 = G.JejuDataNo
 			LEFT JOIN JEJUDATA AS H
 			ON A.place7 = H.JejuDataNo
-			ORDER BY course_num ASC;
+			ORDER BY A.lookup_num DESC;
 	</select>
+		<select id="selectNewestcourseList"  resultType="Map">
+			SELECT
+			userId, title, content, course_num, B.detail_img AS imgUrl,
+			B.name AS name1, C.name AS name2, D.name AS name3, E.name AS name4, 
+			F.name AS name5, G.name AS name6, H.name AS name7 FROM Course AS A
+			LEFT JOIN JEJUDATA AS B
+			ON A.place1 = B.JejuDataNo
+			LEFT JOIN JEJUDATA AS C
+			ON A.place2 = C.JejuDataNo
+			LEFT JOIN JEJUDATA AS D
+			ON A.place3 = D.JejuDataNo
+			LEFT JOIN JEJUDATA AS E
+			ON A.place4 = E.JejuDataNo
+			LEFT JOIN JEJUDATA AS F
+			ON A.place5 = F.JejuDataNo
+			LEFT JOIN JEJUDATA AS G
+			ON A.place6 = G.JejuDataNo
+			LEFT JOIN JEJUDATA AS H
+			ON A.place7 = H.JejuDataNo
+			ORDER BY course_num DESC;
+	</select>
+	
+	<select id="selectFoodHouseList" resultType="NeighborDto">
+			SELECT * FROM neighbor WHERE name=#{name}
+	</select>
+	
+	<select id="selectFood" resultType="FoodDto">
+			SELECT * FROM foodstore WHERE store_no=#{num}
+	</select>
+	
+	<select id="selectHouse" resultType="HouseDto">
+			SELECT * FROM accommodation WHERE accommodation_id=#{num}
+	</select>
+	
+	<update id="setlookup_num"  parameterType="CourseDto">
+			UPDATE COURSE SET
+			lookup_num=#{lookup_num}
+			WHERE course_num=#{course_num}
+	</update>
+	
+	<update id="setLookup"  parameterType="JejuDataDto">
+			UPDATE JEJUDATA SET
+			real_lookup_num=#{real_lookup_num}
+			WHERE JejuDataNo=#{JejuDataNo}
+	</update>
+	
+	<select id="findbyCourse_num"  resultType="CourseDto"  parameterType="int">
+		SELECT * FROM Course WHERE Course_num=#{Course_num}
+	</select>
+	
+	 <!-- 좋아요 넣기 -->
+	<insert id="insertLikeCourse"  parameterType="LikeCourseDto">
+			INSERT INTO like_course
+			(userId,course_num)
+			VALUES
+			(#{userId} , #{course_num})
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="deleteLikeCoure"  parameterType="LikeCourseDto">
+			DELETE FROM like_course
+			WHERE userId=#{userId} AND course_num=#{course_num}
+	</delete>
+	
+	<update id="setLike"  parameterType="CourseDto">
+			UPDATE Course SET
+			like_num=#{like_num}
+			WHERE course_num=#{course_num}
+	</update>
+	
+	<select id="selectOneLikeCourse"  resultType="LikeCourseDto">
+			SELECT * FROM like_course 
+			WHERE userId=#{userId} AND course_num=#{course_num}
+	</select>
+	
+	<select id="selectLikeCourse"  resultType="LikeCourseDto">
+			SELECT * FROM like_course
+			WHERE userId=#{userId}
+	</select>
+	
+	<select id="selectnewestMyCourse"  resultType="CourseDto">
+			SELECT course_num FROM course
+			WHERE userId=#{userId} 
+			ORDER BY course_num desc limit 1;
+	</select>
+	
+	<delete id="deleteCourse"  parameterType="int">
+			DELETE FROM COURSE
+			WHERE course_num=#{course_num}
+	</delete>
 	
 </mapper>

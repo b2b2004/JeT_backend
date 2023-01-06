@@ -79,5 +79,11 @@ public class TravelController {
 		return new ResponseEntity<>(travelService.관광지리뷰좋아요가져오기(principal), HttpStatus.OK);
 	}
 	
+	@PostMapping("/board/deleteReview")
+	public ResponseEntity<?> deleteReview(@RequestBody int reviewNo){
+		System.out.println("리뷰 삭제하기");
+		return new ResponseEntity<>(travelService.리뷰삭제하기(reviewNo), HttpStatus.OK);
+	}
+	
 }
 

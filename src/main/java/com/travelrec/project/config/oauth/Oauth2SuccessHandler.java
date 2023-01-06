@@ -35,14 +35,15 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .sign(Algorithm.HMAC512("Jet"));
 
         System.out.println(jwtToken);
+        System.out.println(username);
         response.setHeader("Authorization", "Bearer "+jwtToken);
         response.setContentType("application/json; charset=utf-8");
-        String url = makeRedirectUrl("Bearer "+jwtToken);
+        String url = makeRedirectUrl("Bearer "+jwtToken, username);
         getRedirectStrategy().sendRedirect(request, response, url);
     }
     
-    private String makeRedirectUrl(String token) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3000/Oauth2Login/"+token)
+    private String makeRedirectUrl(String token, String username) {
+        return UriComponentsBuilder.fromUriString("http://localhost:3000/Oauth2Login/"+token + "/" + username)
                 .build().toUriString();
     }
 

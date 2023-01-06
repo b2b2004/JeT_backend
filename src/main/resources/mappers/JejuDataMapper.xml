@@ -77,5 +77,10 @@
 			WHERE userId=#{userId}
 	</select>
 	
+	<delete id="deleteReview"  parameterType="int">
+			DELETE FROM JEJUDATA_review
+			WHERE review_num=#{review_num}
+	</delete>
+	
 
 </mapper>

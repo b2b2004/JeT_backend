@@ -12,8 +12,10 @@
 	</insert>
 	
 	<select id="findByUserId" resultType="UserDto">
-			SELECT * FROM USER 
-			WHERE userId=#{userId}
+			SELECT *,B.tendency_result AS tendency FROM USER AS A
+			LEFT JOIN Survey AS B
+			ON A.userId = B.userId
+			WHERE A.userId=#{userId}
 	</select>
 	
 	<update id="updatePw"  parameterType="UserDto">
@@ -56,9 +58,34 @@
 			WHERE userId=#{userId}
 	</select>
 	
+	<select id="selectLikePlaceMypage"  resultType="Map">
+			SELECT B.name AS name, B.detail_img AS detail_img, A.user_like_num AS user_like_num FROM USER_LIKE AS A
+			LEFT JOIN JEJUDATA AS B
+			ON A.place = B.name
+			WHERE userId=#{userId}
+	</select>
+	
 	<select id="selectOneLikePlace"  resultType="LikePlaceDto">
 			SELECT * FROM USER_LIKE 
 			WHERE userId=#{userId} AND place=#{place}
 	</select>
+	
+	<insert id="insertSurvey"  parameterType="SurveyDto">
+			INSERT INTO SURVEY
+			(userId,answer1,answer2,answer3,answer4,tendency_result)
+			VALUES
+			(#{userId} , #{answer1} , #{answer2} , #{answer3}, #{answer4}, #{tendency_result})
+	</insert>
+	
+	<update id="updateSurvey" parameterType="SurveyDto">
+			UPDATE SURVEY SET
+			answer1=#{answer1}, answer2=#{answer2}, answer3=#{answer3}, answer4=#{answer4}, tendency_result=#{tendency_result}
+			WHERE userId=#{userId}
+	</update>
 
+	<select id="getSurvey"  resultType="SurveyDto">
+			SELECT * FROM SURVEY 
+			WHERE userId=#{userId}
+	</select>
+	
 </mapper>

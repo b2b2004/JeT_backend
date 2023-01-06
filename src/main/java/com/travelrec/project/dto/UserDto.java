@@ -14,6 +14,7 @@ public class UserDto {
     private String password;
     private String email;
     private String username;
+    private int tendency;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date signup;

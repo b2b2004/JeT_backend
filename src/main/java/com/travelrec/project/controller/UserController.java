@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.travelrec.project.config.auth.PrincipalDetail;
+import com.travelrec.project.dto.SurveyDto;
 import com.travelrec.project.dto.UserDto;
 import com.travelrec.project.mapper.UserMapper;
 import com.travelrec.project.service.UserService;
@@ -92,7 +93,33 @@ public class UserController {
 	@GetMapping("/user/likePlace")
 	public ResponseEntity<?> getLikePlace(Authentication authentication){
 		PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+		System.out.println("getLikePlace 실행 :");
 		return new ResponseEntity<>(userService.좋아하는장소가져오기(principal), HttpStatus.OK);
+	}
+	
+	@GetMapping("/user/mypagelikePlace")
+	public ResponseEntity<?> mypagelikePlace(Authentication authentication){
+		PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+		System.out.println("mypagelikePlace 실행 :");
+		return new ResponseEntity<>(userService.마이페이지좋아하는장소(principal), HttpStatus.OK);
+	}
+	
+	@PostMapping("/user/getSurvey")
+	public ResponseEntity<?> getSurvey(@RequestBody String userId){
+		System.out.println("getSurvey 실행 :" + userId);
+		return new ResponseEntity<>(userService.사용자성향불러오기(userId), HttpStatus.OK);
+	}
+	
+	@PostMapping("/user/survey")
+	public ResponseEntity<?> setSurvey(@RequestBody SurveyDto survey){
+		System.out.println("setSurvey 실행 :" + survey);
+		return new ResponseEntity<>(userService.사용자성향등록(survey), HttpStatus.OK);
+	}
+	
+	@PostMapping("/user/surveyUpdate")
+	public ResponseEntity<?> surveyUpdate(@RequestBody SurveyDto survey){
+		System.out.println("setSurvey 실행 :" + survey);
+		return new ResponseEntity<>(userService.사용자성향수정(survey), HttpStatus.OK);
 	}
 	
 }

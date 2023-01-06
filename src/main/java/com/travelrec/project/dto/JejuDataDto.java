@@ -37,8 +37,6 @@ public class JejuDataDto {
 	private String adult_price;
 	private String teenager_price;
 	private String children_price;
-	private String place_3;
-	private String place_5;
-	private String place_10;	
 	private String tmp_tags;
+	private Double time_sum;
 }
