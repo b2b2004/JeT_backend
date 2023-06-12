@@ -45,8 +45,8 @@
 | <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/2960c2c4-8d98-4bd9-bcf4-7a7be09eeb56"/>   |  <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/d1756cd9-9e8f-4893-897a-b791ed338f92"/>     |
 | 여행지 상세 페이지   |  여행지 지도 페이지   |  
 | <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/1c7cff78-9aeb-4454-afe5-829d43163fc6"/>   |  <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/f3ab867f-7541-4e9d-9dd4-87e88f29ec66"/>    
-| 스터디 및 프로젝트 모집 목록   |  스터디 및 프로젝트 상세   |  
-| <img width="500" src="https://github.com/b2b2004/SJY-backend/assets/87749472/bc95e296-8773-4122-8ff5-6b779d2467f1"/>   |  <img width="500" src="https://github.com/b2b2004/SJY-backend/assets/87749472/12d70d6d-b115-4081-8b4c-b239d01370c1"/>   
-| 스터디 및 프로젝트 상세   |  스터디 및 프로젝트 상세   |  
-| <img width="500" src="https://github.com/b2b2004/SJY-backend/assets/87749472/f2485f54-df4d-40f7-a7d7-59c9fa9eed69"/>   |  <img width="500" src="https://github.com/b2b2004/SJY-backend/assets/87749472/831a1199-da27-4838-87c3-44fee49db679"/>   
+| 코스 추천 선택 모달창   |  추천 된 코스   | 
+| <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/d15f7fdf-59f6-490e-8092-fc4002a4daa9"/>   |  <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/e3665ff0-05d7-41ee-b966-cbf2cfcb24d4"/>   
+| 추천 된 코스내의 관광지 정보   |  각 사용자들이 추천 받은 코스   |  
+| <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/465f97bf-999d-477d-8a86-6bea17a34452"/>   |  <img width="500" src="https://github.com/b2b2004/JeT_backend/assets/87749472/9e165ac5-9a7b-4c93-8812-e0e2642e3f5d"/>   
 
